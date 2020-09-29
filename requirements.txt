@@ -1,0 +1,9 @@
+chatterbot
+nltk
+spacy
+flask
+pyyaml
+sklearn
+numpy
+tensorflow
+tkinter

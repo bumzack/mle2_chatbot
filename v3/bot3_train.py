@@ -7,6 +7,8 @@ from keras.optimizers import SGD
 import nltk
 import numpy as np
 
+nltk.download('punkt')                                        # first-time use only
+nltk.download('wordnet')                                      # first-time use only
 
 from nltk.stem import WordNetLemmatizer
 

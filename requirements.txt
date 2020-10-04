@@ -6,4 +6,5 @@ pyyaml
 sklearn
 numpy
 tensorflow
-tkinter
+keras
+chatterbot_corpus

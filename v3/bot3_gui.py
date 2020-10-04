@@ -1,3 +1,5 @@
+import random
+
 import nltk
 from nltk.stem import WordNetLemmatizer
 

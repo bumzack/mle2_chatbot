@@ -39,7 +39,7 @@ def bag_of_words(sentence, words, show_details=True):
                 bag[i] = 1
                 if show_details:
                     print("found in bag: %s" % word)
-                    return (np.array(bag))
+    return (np.array(bag))
 
 
 def predict_class(sentence):
@@ -60,7 +60,7 @@ def getResponse(ints, intents_json):
     tag = ints[0]['intent']
     list_of_intents = intents_json['intents']
     for i in list_of_intents:
-        if (i['tag'] == tag):
+        if i['tag'] == tag:
             result = random.choice(i['responses'])
             break
     return result

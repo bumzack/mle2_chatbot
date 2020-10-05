@@ -15,7 +15,7 @@ from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 import json
 
-intents_file = open('../data/intents.json').read()
+intents_file = open('../input_data/intents.json').read()
 
 intents = json.loads(intents_file)
 

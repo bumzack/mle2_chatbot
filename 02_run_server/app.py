@@ -12,7 +12,7 @@ from keras.models import load_model
 model = load_model('../data/chatbot_model.h5')
 import json
 
-intents = json.loads(open('../data/intents.json').read())
+intents = json.loads(open('../input_data/intents.json').read())
 words = pickle.load(open('../data/words.pkl', 'rb'))
 classes = pickle.load(open('../data/classes.pkl', 'rb'))
 
@@ -63,13 +63,14 @@ def predict_class(sentence):
 
 
 def getResponse(ints, intents_json):
-    print("getResponse   ints: %s",ints)
 
     tag = ints[0]['intent']
     list_of_intents = intents_json['intents']
-    print("getResponse     list_of_intents ", list_of_intents)
+    #  print("getResponse     list_of_intents ", list_of_intents)
     for i in list_of_intents:
         if i['tag'] == tag:
+            print("getResponse  predicted class: %s", ints)
+            print("getResponse     found intent: %s ", i)
             result = random.choice(i['responses'])
             break
     return result

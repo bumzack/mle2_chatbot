@@ -1,10 +1,10 @@
-chatterbot
+# chatterbot
 nltk
-spacy
+# spacy
 flask
 pyyaml
 sklearn
 numpy
 tensorflow
 keras
-chatterbot_corpus
+# chatterbot_corpus

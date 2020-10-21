@@ -134,4 +134,5 @@ dmypy.json
 
 dataset
 02_spacy/archive
-archive/spacy
+/archive/spacy/ner/
+/archive/spacy/

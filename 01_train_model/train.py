@@ -1,11 +1,25 @@
 import pickle
 import random
+import ssl
+
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.optimizers import SGD
 
 import nltk
 import numpy as np
+from nltk import word_tokenize, pos_tag
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 
 nltk.download('punkt')                                        # first-time use only
 nltk.download('wordnet')                                      # first-time use only
@@ -25,7 +39,7 @@ classes = []
 
 documents = []
 
-ignore_letters = ['!', '?', ',', '.']
+ignore_letters = ['!', '?', ',', '.', '-']
 
 for intent in intents['intents']:
 
@@ -39,15 +53,23 @@ for intent in intents['intents']:
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
-print(documents)
+print("documtens: " , documents)
 
 # lemmaztize and lower each word and remove duplicates
 
 words = [lemmatizer.lemmatize(w.lower()) for w in words if w not in ignore_letters]
 
+print("words: " , words)
+
 words = sorted(list(set(words)))
+
+print("words sorted: " , words)
+
 # sort classes
 classes = sorted(list(set(classes)))
+
+print("classes sorted: " , classes)
+
 # documents = combination between patterns and intents
 print(len(documents), "documents")
 # classes = intents

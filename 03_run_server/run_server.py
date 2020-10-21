@@ -17,7 +17,7 @@ intents = json.loads(open('../input_data/intents.json').read())
 words = pickle.load(open('../data/words.pkl', 'rb'))
 classes = pickle.load(open('../data/classes.pkl', 'rb'))
 
-STATIC_DIR = os.path.abspath('../02_run_server/static')
+STATIC_DIR = os.path.abspath('/static')
 print("STATIC DIR   ", STATIC_DIR)
 
 app = Flask(__name__, static_folder=STATIC_DIR)

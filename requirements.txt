@@ -1,10 +1,11 @@
 # chatterbot
 nltk
-# spacy
 flask
 pyyaml
 sklearn
 numpy
 tensorflow
 keras
-# chatterbot_corpus
+dateparser
+spacy
+en_core_web_sm

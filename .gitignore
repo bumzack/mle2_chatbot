@@ -133,6 +133,6 @@ dmypy.json
 
 
 dataset
-02_spacy/archive
+02_train_spacy/archive
 /archive/spacy/ner/
 /archive/spacy/

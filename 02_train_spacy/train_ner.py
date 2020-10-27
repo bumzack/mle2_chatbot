@@ -1,6 +1,6 @@
 # https://github.com/explosion/spaCy/blob/master/examples/training/train_ner.py
 
-#!/usr/bin/env python
+# !/usr/bin/env python
 # coding: utf8
 """Example of training spaCy's named entity recognizer, starting off with an
 existing model or a blank model.
@@ -10,25 +10,19 @@ For more details, see the documentation:
 Compatible with: spaCy v2.0.0+
 Last tested with: v2.2.4
 """
+import sys
+sys.path.append(".")
 
 from __future__ import unicode_literals, print_function
-
-import plac
+from spacy_ner_training_data import TRAINING_DATA
 import random
 import warnings
 from pathlib import Path
+
+import plac
 import spacy
 from spacy.util import minibatch, compounding
 
-
-# training data
-TRAIN_DATA = [
-    ("Who is Shaka Khan?", {"entities": [(7, 17, "PERSON")]}),
-    ("Margareten is a district in Vienna?", {"entities": [(0, 10, "VIE_DIS")]}),
-    ("Floridsdorf is my hood?", {"entities": [(0, 11, "VIE_DIS")]}),
-    ("Innere Stadt is also a district in Vienna?", {"entities": [(0, 12, "VIE_DIS")]}),
-    ("I like London and Berlin.", {"entities": [(7, 13, "LOC"), (18, 24, "LOC")]}),
-]
 
 @plac.annotations(
     model=("Model name. Defaults to blank 'en' model.", "option", "m", str),
@@ -64,7 +58,7 @@ def main(model=None, output_dir=None, n_iter=100):
     # only train NER
     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
         # show warnings for misaligned entity spans once
-        warnings.filterwarnings("once", category=UserWarning, module='02_spacy')
+        warnings.filterwarnings("once", category=UserWarning, module='02_train_spacy')
 
         # reset and initialize the weights randomly – but only if we're
         # training a new model
@@ -88,8 +82,8 @@ def main(model=None, output_dir=None, n_iter=100):
     # test the trained model
     for text, _ in TRAIN_DATA:
         doc = nlp(text)
-        print("Entities", [(ent.text, ent.label_) for ent in doc.ents])
-        print("Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
+        print("TrainData  Entities", [(ent.text, ent.label_) for ent in doc.ents])
+        print("TrainData  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
 
     # save model to output directory
     if output_dir is not None:
@@ -104,17 +98,16 @@ def main(model=None, output_dir=None, n_iter=100):
         nlp2 = spacy.load(output_dir)
         for text, _ in TRAIN_DATA:
             doc = nlp2(text)
-            print("Entities", [(ent.text, ent.label_) for ent in doc.ents])
-            print("Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
+            print("TrainData2  Entities", [(ent.text, ent.label_) for ent in doc.ents])
+            print("TrainData2  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
+
 
 if __name__ == "__main__":
-    output_dir = Path.cwd()
+    output_dir = "../data/sapcy_ner_trained_model"
     train = False
-
 
     if train:
         main('en_core_web_sm', output_dir, 100)
-
 
     # test the saved model
     print("Loading from", output_dir)
@@ -122,20 +115,22 @@ if __name__ == "__main__":
 
     s = "Autonomous cars shift insurance liability toward manufacturers"
     auto_cars = nlp2(s)
-    print("Entities", [(ent.text, ent.label_) for ent in auto_cars.ents])
-    print("Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in auto_cars])
+    # print("\n\nUUUU Entities", [(ent.text, ent.label_) for ent in auto_cars.ents])
+    # print("\n\nUUUU Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in auto_cars])
 
     for token in auto_cars:
-        print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,
-              token.shape_, token.is_alpha, token.is_stop)
-
-    s = "Where is an open pool in Margareten?"
-    pool= nlp2(s)
-    print("Entities", [(ent.text, ent.label_) for ent in pool.ents])
-    print("Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in pool])
-
-    for token in pool:
-        print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,
-              token.shape_, token.is_alpha, token.is_stop)
-
-    nlp = spacy.load("en_core_web_sm")
+        # print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,
+        #       token.shape_, token.is_alpha, token.is_stop)
+        print(token.text, token.lemma_, token.pos_)
+    #
+    # s = "Where is an open pool in Margareten?"
+    #
+    #
+    # doc = nlp2(s)
+    # print("NEW  Entities", [(ent.text, ent.label_) for ent in doc.ents])
+    # print("NEW  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
+    #
+    # nlp = spacy.load("en_core_web_sm")
+    # pool_standard = nlp(s)
+    # print("Entities default ", [(ent.text, ent.label_) for ent in pool_standard.ents])
+    # print("Tokens default ", [(t.text, t.ent_type_, t.ent_iob) for t in pool_standard])

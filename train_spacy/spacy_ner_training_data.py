@@ -1,5 +1,5 @@
 # training data
-TRAIN_DATA = [
+DATA = [
     ("Who is Shaka Khan?", {"entities": [(7, 17, "PERSON")]}),
     ("Margareten is a district in Vienna?", {"entities": [(0, 10, "VIE_DIS")]}),
     ("Floridsdorf is my hood?", {"entities": [(0, 11, "VIE_DIS")]}),
@@ -180,6 +180,16 @@ TRAIN_DATA = [
     ("Innere Stadt is also a district in Vienna?", {"entities": [(0, 12, "VIE_DIS")]}),
     ("I like London and Berlin.", {"entities": [(7, 13, "LOC"), (18, 24, "LOC")]}),
 ]
+
+def training_data_lower_case():
+    newTrainData = []
+    for text, ent in DATA:
+        text =  text.lower()
+        newTrainData.append((text, ent))
+    return newTrainData
+
+TRAINING_DATA = DATA +  training_data_lower_case()
+
 
 if __name__ == "__main__":
     print("training data")

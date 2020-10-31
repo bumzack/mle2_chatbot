@@ -148,30 +148,26 @@ def populateContext(ctx, response):
         ctx.data["intent_pool_where"] = True
 
 def checkDistrict(userText):
-    districts = nlp_spacy_districts(userText)
+    spacy_districts = nlp_spacy_districts(userText)
 
-    # print("=========  districts ===========")
-    # for token in districts:
-    #     print("found districts: ", token.text, token.lemma_, token.pos_)
-    # print("=========  END districts ===========")
-    #
-    # print("=========  districts entities ===========")
-    # print("Entities newly trained ", [(ent.text, ent.label_) for ent in districts.ents])
-    # print("=========  END districts entities ===========")
+    print("=========  districts entities ===========")
+    print("district Entities newly trained ", [(ent.text, ent.label_) for ent in spacy_districts.ents])
+    print("=========  END districts entities ===========")
+    districts = []
+    for text, label in spacy_districts:
+        if label == "VIE_DIS":
+            districts.append(text)
 
-
-    for token in districts:
-        print("district   newly trained       ", token.text, token.lemma_, token.pos_)
-
-    print("district Tokens newly trained    ", [(t.text, t.ent_type_, t.ent_iob) for t in districts])
-    print("district Entities newly trained ", [(ent.text, ent.label_) for ent in districts.ents])
+    print("=========  filtered districts entities ===========")
+    print("filtered districts ", [d for d in districts])
+    print("=========  END filtered  districts entities ===========")
 
 
-    # ner = nlp_spacy_full(userText)
-    # print("=========  NER ===========")
-    # for token in ner:
-    #     print("found ner:   ", token.text, token.lemma_, token.pos_)
-    # print("=========  END NER ===========")
+    ner = nlp_spacy_full(userText)
+    print("=========  NER ===========")
+    for token in ner:
+        print("found ner:   ", token.text, token.lemma_, token.pos_)
+    print("=========  END NER ===========")
 
 @app.route("/get")
 def get_bot_response():

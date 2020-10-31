@@ -1,7 +1,9 @@
 import sys
+
+from train_spacy.spacy_ner_training_data import TRAINING_DATA
+
 sys.path.append('./')
 
-from archive.spacy_ner_training_data import  TRAIN_DATA
 
 
 names = [
@@ -55,7 +57,7 @@ zipCode = [
 ]
 
 not_found = []
-for t in TRAIN_DATA:
+for t in TRAINING_DATA:
     # print("sentence: ", t[0])
     sent = t[0]
 
@@ -69,7 +71,7 @@ for t in TRAIN_DATA:
             # print("                district: ", sent[start:end])
             found = False
             for n in names:
-                if n == distr:
+                if n == distr or n.lower() == distr:
                     found = True
             if not found:
                 for z in zipCode:

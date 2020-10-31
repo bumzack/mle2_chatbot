@@ -13,9 +13,11 @@ Last tested with: v2.2.4
 from __future__ import unicode_literals, print_function
 
 import sys
+
+from train_spacy.spacy_ner_training_data import TRAINING_DATA
+
 sys.path.append('./')
 
-from  train_spacy.spacy_ner_training_data import  TRAIN_DATA
 
 import random
 import warnings
@@ -24,6 +26,7 @@ from pathlib import Path
 import plac
 import spacy
 from spacy.util import minibatch, compounding
+
 
 
 @plac.annotations(
@@ -50,7 +53,7 @@ def main(model=None, output_dir=None, n_iter=100):
         ner = nlp.get_pipe("ner")
 
     # add labels
-    for _, annotations in TRAIN_DATA:
+    for _, annotations in TRAINING_DATA:
         for ent in annotations.get("entities"):
             ner.add_label(ent[2])
 
@@ -67,10 +70,10 @@ def main(model=None, output_dir=None, n_iter=100):
         if model is None:
             nlp.begin_training()
         for itn in range(n_iter):
-            random.shuffle(TRAIN_DATA)
+            random.shuffle(TRAINING_DATA)
             losses = {}
             # batch up the examples using spaCy's minibatch
-            batches = minibatch(TRAIN_DATA, size=compounding(4.0, 32.0, 1.001))
+            batches = minibatch(TRAINING_DATA, size=compounding(4.0, 32.0, 1.001))
             for batch in batches:
                 texts, annotations = zip(*batch)
                 nlp.update(
@@ -82,7 +85,7 @@ def main(model=None, output_dir=None, n_iter=100):
             print("Losses", losses)
 
     # test the trained model
-    for text, _ in TRAIN_DATA:
+    for text, _ in TRAINING_DATA:
         doc = nlp(text)
         print("TrainData  Entities", [(ent.text, ent.label_) for ent in doc.ents])
         print("TrainData  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
@@ -98,7 +101,7 @@ def main(model=None, output_dir=None, n_iter=100):
         # test the saved model
         print("Loading from", output_dir)
         nlp2 = spacy.load(output_dir)
-        for text, _ in TRAIN_DATA:
+        for text, _ in TRAINING_DATA:
             doc = nlp2(text)
             print("TrainData2  Entities", [(ent.text, ent.label_) for ent in doc.ents])
             print("TrainData2  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
@@ -136,3 +139,5 @@ if __name__ == "__main__":
     # pool_standard = nlp(s)
     # print("Entities default ", [(ent.text, ent.label_) for ent in pool_standard.ents])
     # print("Tokens default ", [(t.text, t.ent_type_, t.ent_iob) for t in pool_standard])
+
+    print("\n\n\n\nDONE")

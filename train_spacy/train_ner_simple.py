@@ -14,17 +14,22 @@ from __future__ import unicode_literals, print_function
 
 import sys
 
+from train_spacy.spacy_ner_training_data import TRAINING_DATA
+
 sys.path.append('./')
-from train_spacy.spacy_ner_training_data import TRAIN_DATA
 
 import random
 
 import spacy
 
+
+
 nlp = spacy.blank("en")
 optimizer = nlp.begin_training()
 for i in range(20):
-    random.shuffle(TRAIN_DATA)
-    for text, annotations in TRAIN_DATA:
+    random.shuffle(TRAINING_DATA)
+    for text, annotations in TRAINING_DATA:
         nlp.update([text], [annotations], sgd=optimizer)
 nlp.to_disk("../data/spacy_simple")
+
+print("DONE")

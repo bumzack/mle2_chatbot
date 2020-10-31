@@ -15,7 +15,7 @@ if __name__ == "__main__":
     nlp2 = spacy.load(model_dir)
 
 
-    sentence = "in Döbling"
+    sentence = "in döbling"
     district = nlp2(sentence)
 
     for token in district:

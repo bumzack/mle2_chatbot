@@ -1,7 +1,7 @@
 {
   "intents": [
     {
-      "tag": "greeting",
+      "tag": "intent_greeting",
       "patterns": [
         "Hi there",
         "How are you",
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "tag": "goodbye",
+      "tag": "intent_goodbye",
       "patterns": [
         "Bye",
         "See you later",
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "tag": "thanks",
+      "tag": "intent_thanks",
       "patterns": [
         "Thanks",
         "Thank you",
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "tag": "noanswer",
+      "tag": "intent_noanswer",
       "patterns": [],
       "responses": [
         "Sorry, can't understand you",
@@ -69,7 +69,7 @@
       ]
     },
     {
-      "tag": "options",
+      "tag": "intent_options",
       "patterns": [
         "How you could help me",
         "What you can do",
@@ -86,7 +86,7 @@
       ]
     },
     {
-      "tag": "user_bored",
+      "tag": "intent_user_bored",
       "patterns": [
         "I am bored - what can i do today",
         "I have a little time - what can I do",
@@ -94,7 +94,7 @@
       ],
       "responses": [
         "You could spent some time at a pool and relax?",
-        "I could offer you a visist public pool in Viennea"
+        "I could offer you a visit public pool in Viennea"
       ],
       "context": [
         ""
@@ -147,7 +147,7 @@
       ]
     },
     {
-      "tag": "user_not_happy",
+      "tag": "intent_user_not_happy",
       "patterns": [
         "I don't think so",
         "I don't like your recommendation",
@@ -158,6 +158,19 @@
       "responses": [
         "Oh - I am sorry - you seem unhappy - how can I help?",
         "Damn - that sounds like you're pissed - how can I help?"
+      ],
+      "context": [
+        ""
+      ]
+    },
+    {
+      "tag": "intent_user_approve",
+      "patterns": [
+        "sounds great",
+        "ok"
+      ],
+      "responses": [
+        "Nice - tell me where do you wanna?"
       ],
       "context": [
         ""

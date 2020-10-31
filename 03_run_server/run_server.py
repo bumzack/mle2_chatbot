@@ -1,13 +1,18 @@
 import os
 import random
+import sys
 
 import nltk
-from flask import Flask, render_template, request
+import numpy as np
+import spacy
+
+sys.path.append('./')
+
+from flask import Flask, render_template, request, session
 from nltk.stem import WordNetLemmatizer
 
 lemmatizer = WordNetLemmatizer()
 import pickle
-import numpy as np
 from keras.models import load_model
 
 model = load_model('../data/chatbot_model.h5')
@@ -17,8 +22,18 @@ intents = json.loads(open('../input_data/intents.json').read())
 words = pickle.load(open('../data/words.pkl', 'rb'))
 classes = pickle.load(open('../data/classes.pkl', 'rb'))
 
-STATIC_DIR = os.path.abspath('/static')
+STATIC_DIR = os.path.abspath('./static')
 print("STATIC DIR   ", STATIC_DIR)
+
+# ######################################################################
+# load spacy NER model
+# ######################################################################
+spacy_model_dir = "../data/sapcy_ner_trained_model"
+spacy_model_simple_dir = "../data/spacy_simple"
+model_dir = spacy_model_dir
+print("Loading from: '", model_dir, "'")
+nlp_spacy_districts = spacy.load(model_dir)
+nlp_spacy_full = spacy.load("en_core_web_lg")
 
 app = Flask(__name__, static_folder=STATIC_DIR)
 
@@ -64,18 +79,48 @@ def predict_class(sentence):
 
 
 def getResponse(ints, intents_json):
-
     tag = ints[0]['intent']
     list_of_intents = intents_json['intents']
     #  print("getResponse     list_of_intents ", list_of_intents)
+    serverlog = []
+    result = None
     for i in list_of_intents:
         if i['tag'] == tag:
+            msg1 = "getResponse  predicted class:  " + str(ints)
+            msg2 = "getResponse     found intent: " + str(i)
+            serverlog.append(msg1 + "\n")
+            serverlog.append(msg2 + "\n")
             print("getResponse  predicted class: %s", ints)
             print("getResponse     found intent: %s ", i)
             result = random.choice(i['responses'])
             break
-    return result
 
+    response = {
+        'response': result,
+        'serverlog': serverlog,
+        'tag': tag
+    }
+
+    return response
+
+
+class BotContext:
+    def __init__(self):
+        self.data = {
+            "intent_greeting": None,
+            "intent_goodbye": None,
+            "intent_thanks": None,
+            "intent_noanswer": None,
+            "intent_options": None,
+            "intent_user_bored": None,
+            "intent_pool_today": None,
+            "intent_pool_tomorrow": None,
+            "intent_pool_where": None,
+            "intent_user_not_happy": None,
+            "intent_user_approve": None,
+            "day": None,
+            "district": None
+        }
 
 
 @app.route("/")
@@ -83,14 +128,61 @@ def home():
     return render_template("index.html")
 
 
+def populateContext(ctx, response):
+    if response["tag"] == 'intent_pool_today':
+        print("adding 'today' to ctx ")
+        ctx.data.intent_day = True
+        ctx.data.day = 'today'
+
+    if response["tag"] == 'intent_pool_tomorrow':
+        print("adding 'tomorrow' to ctx ")
+        ctx.data.intent_day = True
+        ctx.data.day = 'tomorrow'
+
+    if response["tag"] == 'intent_pool_where':
+        print("adding 'tomorrow' to ctx ")
+        ctx.data.intent_pool_where = True
+
+
+def checkDistrict(userText):
+    districts = nlp_spacy_districts(userText)
+
+    for token in districts:
+        print("found districts: ", token.text, token.lemma_, token.pos_)
+
+    ner = nlp_spacy_full(userText)
+
+    for token in ner:
+        print("found ner:   ", token.text, token.lemma_, token.pos_)
+
+
 @app.route("/get")
 def get_bot_response():
-    userText = request.args.get('msg')
+    ctx = BotContext()
 
+    if not session.get("context") is None:
+        data = session.get("context")
+        ctx.data = data
+        print("====== context.data =======")
+        print(ctx.data)
+        print("===========================")
+    else:
+        print("====== no context on session object found =======")
+
+    userText = request.args.get('msg')
     ints = predict_class(userText)
-    return getResponse(ints, intents)
+
+    # contains a random response depending on the intent found
+    response = getResponse(ints, intents)
+    populateContext(ctx, response)
+
+    district = checkDistrict(userText)
+
+    print("response: " + response["response"])
+    session["context"] = ctx.data
+    return response
 
 
 if __name__ == "__main__":
+    app.config["SECRET_KEY"] = "i am just secret"
     app.run()
-

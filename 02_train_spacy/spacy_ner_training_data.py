@@ -65,7 +65,7 @@ TRAIN_DATA = [
     ("The district Simmering has the zipcode 1110.", {"entities": [(13, 22, "VIE_DIS"), (39, 43, "VIE_DIS")]}),
     ("The district Meidling has the zipcode 1120.", {"entities": [(13, 21, "VIE_DIS"), (38, 42, "VIE_DIS")]}),
     ("The district Hietzing has the zipcode 1130.", {"entities": [(13, 21, "VIE_DIS"), (38, 42, "VIE_DIS")]}),
-    ("The district Penzing has the zipcode 1140.", {"entities": [(13, 20, "VIE_DIS"), (37, 4, "VIE_DIS")]}),
+    ("The district Penzing has the zipcode 1140.", {"entities": [(13, 20, "VIE_DIS"), (37, 41, "VIE_DIS")]}),
     ("The district Rudolfsheim-Fünfhaus has the zipcode 1150.", {"entities": [(13, 33, "VIE_DIS"), (50, 54, "VIE_DIS")]}),
     ("The district Ottakring has the zipcode 1160.", {"entities": [(13, 22, "VIE_DIS"), (39, 43, "VIE_DIS")]}),
     ("The district Hernals has the zipcode 1170.", {"entities": [(13, 20, "VIE_DIS"), (37, 41, "VIE_DIS")]}),
@@ -75,38 +75,39 @@ TRAIN_DATA = [
     ("The district Floridsdorf has the zipcode 1210.", {"entities": [(13, 24, "VIE_DIS"), (41, 45, "VIE_DIS")]}),
     ("The district Donaustadt has the zipcode 1220.", {"entities": [(13, 23, "VIE_DIS"), (40, 44, "VIE_DIS")]}),
     ("The district Liesing has the zipcode 1230.", {"entities": [(13, 20, "VIE_DIS"), (37, 41, "VIE_DIS")]}),
- 
- 
-
-
 
     ("The district Innere Stadt should not be mistaken with Leopoldstadt.", {"entities": [(13, 25, "VIE_DIS"), (54, 66, "VIE_DIS")]}),
     ("Leopoldstadt is the opposite of Favoriten in regards to life quality.", {"entities": [(0, 12, "VIE_DIS"), (32, 41, "VIE_DIS")]}),
     ("If you ever been to Landstraße going to Simmering is not worth it.", {"entities": [(20, 30, "VIE_DIS"), (40, 49, "VIE_DIS")]}),
-    ("The technical university is in Wieden, but the veterinary university is in Floridsdorf.", {"entities": [(31, 37, "VIE_DIS"), (75, 86, "VIE_DIS")]}),
+    ("The technical university is in Wieden, but the veterinary university is in Floridsdorf.",
+     {"entities": [(31, 37, "VIE_DIS"), (75, 86, "VIE_DIS")]}),
     ("Moving to Margareten is like working in the Josefstadt.", {"entities": [(10, 20, "VIE_DIS"), (44, 54, "VIE_DIS")]}),
-    ("Mariahilf has the best shops, compored to Ottakring where you can only buy food.", {"entities": [(0, 9, "VIE_DIS"), (42, 51, "VIE_DIS")]}),
+    ("Mariahilf has the best shops, compored to Ottakring where you can only buy food.",
+     {"entities": [(0, 9, "VIE_DIS"), (42, 51, "VIE_DIS")]}),
     ("Neubau has as many letters as Josefstadt.", {"entities": [(0, 6, "VIE_DIS"), (30, 40, "VIE_DIS")]}),
     ("Josefstadt is named after Jesus father, but not Meidling.", {"entities": [(0, 10, "VIE_DIS"), (48, 56, "VIE_DIS")]}),
-    ("The main reason Alsergrund exists is to make the people living in the Innere Stadt laugh.", {"entities": [(16, 26, "VIE_DIS"), (70, 82, "VIE_DIS")]}),
+    ("The main reason Alsergrund exists is to make the people living in the Innere Stadt laugh.",
+     {"entities": [(16, 26, "VIE_DIS"), (70, 82, "VIE_DIS")]}),
     ("In Favoriten nobody cares about Simmering.", {"entities": [(3, 12, "VIE_DIS"), (32, 41, "VIE_DIS")]}),
     ("In Simmering everybod cares about and hates Favoriten at the same time.", {"entities": [(3, 12, "VIE_DIS"), (44, 53, "VIE_DIS")]}),
     ("Meidling has a zipcode with the same checksum as Wieden.", {"entities": [(0, 8, "VIE_DIS"), (49, 55, "VIE_DIS")]}),
     ("The offices in Hietzing are older than those in Hernals.", {"entities": [(15, 23, "VIE_DIS"), (48, 55, "VIE_DIS")]}),
 
-
-
-
     ("The streets in Penzing are great, compared to those in Brigittenau", {"entities": [(15, 22, "VIE_DIS"), (55, 66, "VIE_DIS")]}),
-    ("The district Rudolfsheim-Fünfhaus is the district with longest name, Wieden has one of the shortest names.", {"entities": [(13, 33, "VIE_DIS"), (69, 55, "VIE_DIS")]}),
-    ("The brewery in Ottakring is world famous, all the other breweries in Margarten are unknown.", {"entities": [(15, 24, "VIE_DIS"), (69, 78, "VIE_DIS")]}),
-    ("The train station in Hernals was built by Wagner, just like those in Meidling.", {"entities": [(21, 28, "VIE_DIS"), (69, 77, "VIE_DIS")]}),
-    ("Währing is one of the few districts which as an umlaut in its name.", {"entities": [(0, 7, "VIE_DIS"), (37, 4, "VIE_DIS")]}),
-    ("Renting an apartment in Döbling is twice  as expensive compared to Favoriten.", {"entities": [(24, 31, "VIE_DIS"), (67, 76, "VIE_DIS")]}),
+    ("The district Rudolfsheim-Fünfhaus is the district with longest name, Wieden has one of the shortest names.",
+     {"entities": [(13, 33, "VIE_DIS"), (69, 75, "VIE_DIS")]}),
+    ("The brewery in Ottakring is world famous, all the other breweries in Margareten are unknown.",
+     {"entities": [(15, 24, "VIE_DIS"), (69, 79, "VIE_DIS")]}),
+    ("The train station in Hernals was built by Wagner, just like those in Meidling.",
+     {"entities": [(21, 28, "VIE_DIS"), (69, 77, "VIE_DIS")]}),
+    ("Währing is one of the few districts which as an umlaut in its name.", {"entities": [(0, 7, "VIE_DIS") ]}),
+    ("Renting an apartment in Döbling is twice  as expensive compared to Favoriten.",
+     {"entities": [(24, 31, "VIE_DIS"), (67, 76, "VIE_DIS")]}),
     ("The way Brigittenau is pronounced is completely different from Liesing.", {"entities": [(8, 19, "VIE_DIS"), (63, 70, "VIE_DIS")]}),
     ("Floridsdorf is the best hood in Vienna, Donaustadt the wortst.", {"entities": [(0, 11, "VIE_DIS"), (40, 50, "VIE_DIS")]}),
     ("Donaustadt can be seen as the dumb brother of Floridsdorf.", {"entities": [(0, 10, "VIE_DIS"), (46, 57, "VIE_DIS")]}),
-    ("The way the mafia appears to take over Liesing is nothing compared to the gang wars in Neubau .", {"entities": [(39, 46, "VIE_DIS"), (87, 93, "VIE_DIS")]}),
+    ("The way the mafia appears to take over Liesing is nothing compared to the gang wars in Neubau .",
+     {"entities": [(39, 46, "VIE_DIS"), (87, 93, "VIE_DIS")]}),
     ("The people in Leopoldstadt are a little bit different.", {"entities": [(14, 26, "VIE_DIS")]}),
     ("Most of the time I am not in in the district called Landstraße.", {"entities": [(52, 62, "VIE_DIS")]}),
     ("I didn't know Wieden until 5 minutes ago.", {"entities": [(14, 20, "VIE_DIS")]}),
@@ -132,7 +133,6 @@ TRAIN_DATA = [
     ("Innere Stadt is also a district in Vienna?", {"entities": [(0, 12, "VIE_DIS")]}),
     ("I like London and Berlin.", {"entities": [(7, 13, "LOC"), (18, 24, "LOC")]}),
 ]
-
 
 if __name__ == "__main__":
     print("training data")

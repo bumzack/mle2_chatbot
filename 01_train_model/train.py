@@ -2,13 +2,11 @@ import pickle
 import random
 import ssl
 
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout
-from keras.optimizers import SGD
-
 import nltk
 import numpy as np
-from nltk import word_tokenize, pos_tag
+from keras.layers import Dense, Dropout
+from keras.models import Sequential
+from keras.optimizers import SGD
 
 try:
     _create_unverified_https_context = ssl._create_unverified_context
@@ -17,12 +15,12 @@ except AttributeError:
 else:
     ssl._create_default_https_context = _create_unverified_https_context
 
-nltk.download('averaged_perceptron_tagger')
-nltk.download('maxent_ne_chunker')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('maxent_ne_chunker')
 nltk.download('words')
 
-nltk.download('punkt')                                        # first-time use only
-nltk.download('wordnet')                                      # first-time use only
+nltk.download('punkt')  # first-time use only
+nltk.download('wordnet')  # first-time use only
 
 from nltk.stem import WordNetLemmatizer
 
@@ -39,7 +37,7 @@ classes = []
 
 documents = []
 
-ignore_letters = ['!', '?', ',', '.', '-']
+ignore_letters = ['!', '?', ',', '.', '-', '\'']
 
 for intent in intents['intents']:
 
@@ -53,22 +51,22 @@ for intent in intents['intents']:
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
-print("documtens: " , documents)
+print("documents: ", documents)
 
 # lemmaztize and lower each word and remove duplicates
 
 words = [lemmatizer.lemmatize(w.lower()) for w in words if w not in ignore_letters]
 
-print("words: " , words)
+print("words: ", words)
 
 words = sorted(list(set(words)))
 
-print("words sorted: " , words)
+print("words sorted: ", words)
 
 # sort classes
 classes = sorted(list(set(classes)))
 
-print("classes sorted: " , classes)
+print("classes sorted: ", classes)
 
 # documents = combination between patterns and intents
 print(len(documents), "documents")
@@ -101,7 +99,6 @@ for doc in documents:
     output_row[classes.index(doc[1])] = 1
     training.append([bag, output_row])
 
-
 # shuffle the features and make numpy array
 random.shuffle(training)
 training = np.array(training)
@@ -111,7 +108,7 @@ train_y = list(training[:, 1])
 
 print("Training data is created")
 
-##### tgrain the model
+##### train the model
 
 # deep neural networds model
 model = Sequential()

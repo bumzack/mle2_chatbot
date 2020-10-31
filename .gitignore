@@ -136,3 +136,4 @@ dataset
 02_train_spacy/archive
 /archive/spacy/ner/
 /archive/spacy/
+/data/spacy*

@@ -1,7 +1,8 @@
 import sys
 sys.path.append('./')
 
-from spacy_ner_training_data import  TRAIN_DATA
+from archive.spacy_ner_training_data import  TRAIN_DATA
+
 
 names = [
     "Innere Stadt",
@@ -50,8 +51,35 @@ zipCode = [
     1200,
     1210,
     1220,
-   1230
+    1230
 ]
 
+not_found = []
 for t in TRAIN_DATA:
-    print("sentence: %s".format(t))
+    # print("sentence: ", t[0])
+    sent = t[0]
+
+    for ent in t[1].items():
+        # print("    entities:  ", ent)
+        for e in ent[1]:
+            # print("                 e: ", e)
+            start = e[0]
+            end = e[1]
+            distr = sent[start:end]
+            # print("                district: ", sent[start:end])
+            found = False
+            for n in names:
+                if n == distr:
+                    found = True
+            if not found:
+                for z in zipCode:
+                    if str(z) == distr:
+                        found = True
+            if not found:
+                print("       '", distr, "' NOT  found in sentence '", sent, "', start: " + str(start) + ", end: " + str(end))
+                not_found.append(distr)
+
+# print("############################################################")
+# print("not found .........")
+# for n in not_found:
+#     print("notfound:  ", n)

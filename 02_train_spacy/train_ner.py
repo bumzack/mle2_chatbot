@@ -10,11 +10,13 @@ For more details, see the documentation:
 Compatible with: spaCy v2.0.0+
 Last tested with: v2.2.4
 """
-import sys
-sys.path.append(".")
-
 from __future__ import unicode_literals, print_function
-from spacy_ner_training_data import TRAINING_DATA
+
+import sys
+sys.path.append('./')
+
+from archive.spacy_ner_training_data import  TRAIN_DATA
+
 import random
 import warnings
 from pathlib import Path
@@ -103,15 +105,15 @@ def main(model=None, output_dir=None, n_iter=100):
 
 
 if __name__ == "__main__":
-    output_dir = "../data/sapcy_ner_trained_model"
-    train = False
+    spacy_model_dir = "../data/sapcy_ner_trained_model"
+    train = True
 
     if train:
-        main('en_core_web_sm', output_dir, 100)
+        main('en_core_web_lg', spacy_model_dir, 100)
 
     # test the saved model
-    print("Loading from", output_dir)
-    nlp2 = spacy.load(output_dir)
+    print("Loading from", spacy_model_dir)
+    nlp2 = spacy.load(spacy_model_dir)
 
     s = "Autonomous cars shift insurance liability toward manufacturers"
     auto_cars = nlp2(s)
@@ -130,7 +132,7 @@ if __name__ == "__main__":
     # print("NEW  Entities", [(ent.text, ent.label_) for ent in doc.ents])
     # print("NEW  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
     #
-    # nlp = spacy.load("en_core_web_sm")
+    # nlp = spacy.load("en_core_web_lg")
     # pool_standard = nlp(s)
     # print("Entities default ", [(ent.text, ent.label_) for ent in pool_standard.ents])
     # print("Tokens default ", [(t.text, t.ent_type_, t.ent_iob) for t in pool_standard])

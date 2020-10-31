@@ -154,9 +154,9 @@ def checkDistrict(userText):
     print("district Entities newly trained ", [(ent.text, ent.label_) for ent in spacy_districts.ents])
     print("=========  END districts entities ===========")
     districts = []
-    for text, label in spacy_districts:
-        if label == "VIE_DIS":
-            districts.append(text)
+    for ent in spacy_districts.ents:
+        if ent.label_ == "VIE_DIS":
+            districts.append(ent.text)
 
     print("=========  filtered districts entities ===========")
     print("filtered districts ", [d for d in districts])

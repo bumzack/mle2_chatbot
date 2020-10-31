@@ -30,9 +30,13 @@ print("STATIC DIR   ", STATIC_DIR)
 # ######################################################################
 spacy_model_dir = "../data/sapcy_ner_trained_model"
 spacy_model_simple_dir = "../data/spacy_simple"
+
 model_dir = spacy_model_dir
 print("Loading from: '", model_dir, "'")
 nlp_spacy_districts = spacy.load(model_dir)
+
+
+
 nlp_spacy_full = spacy.load("en_core_web_lg")
 
 app = Flask(__name__, static_folder=STATIC_DIR)
@@ -146,22 +150,28 @@ def populateContext(ctx, response):
 def checkDistrict(userText):
     districts = nlp_spacy_districts(userText)
 
-    print("=========  districts ===========")
+    # print("=========  districts ===========")
+    # for token in districts:
+    #     print("found districts: ", token.text, token.lemma_, token.pos_)
+    # print("=========  END districts ===========")
+    #
+    # print("=========  districts entities ===========")
+    # print("Entities newly trained ", [(ent.text, ent.label_) for ent in districts.ents])
+    # print("=========  END districts entities ===========")
+
+
     for token in districts:
-        print("found districts: ", token.text, token.lemma_, token.pos_)
-    print("=========  END districts ===========")
+        print("district   newly trained       ", token.text, token.lemma_, token.pos_)
 
-    print("=========  districts entities ===========")
-    print("Entities newly trained ", [(ent.text, ent.label_) for ent in districts.ents])
-    print("=========  END districts entities ===========")
+    print("district Tokens newly trained    ", [(t.text, t.ent_type_, t.ent_iob) for t in districts])
+    print("district Entities newly trained ", [(ent.text, ent.label_) for ent in districts.ents])
 
 
-
-    ner = nlp_spacy_full(userText)
-    print("=========  NER ===========")
-    for token in ner:
-        print("found ner:   ", token.text, token.lemma_, token.pos_)
-    print("=========  END NER ===========")
+    # ner = nlp_spacy_full(userText)
+    # print("=========  NER ===========")
+    # for token in ner:
+    #     print("found ner:   ", token.text, token.lemma_, token.pos_)
+    # print("=========  END NER ===========")
 
 @app.route("/get")
 def get_bot_response():

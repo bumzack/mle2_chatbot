@@ -15,7 +15,7 @@ from __future__ import unicode_literals, print_function
 import sys
 sys.path.append('./')
 
-from archive.spacy_ner_training_data import  TRAIN_DATA
+from  train_spacy.spacy_ner_training_data import  TRAIN_DATA
 
 import random
 import warnings
@@ -60,7 +60,7 @@ def main(model=None, output_dir=None, n_iter=100):
     # only train NER
     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
         # show warnings for misaligned entity spans once
-        warnings.filterwarnings("once", category=UserWarning, module='02_train_spacy')
+        warnings.filterwarnings("once", category=UserWarning, module='train_spacy')
 
         # reset and initialize the weights randomly – but only if we're
         # training a new model

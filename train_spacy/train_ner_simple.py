@@ -15,8 +15,7 @@ from __future__ import unicode_literals, print_function
 import sys
 
 sys.path.append('./')
-
-from archive.spacy_ner_training_data import  TRAIN_DATA
+from train_spacy.spacy_ner_training_data import TRAIN_DATA
 
 import random
 

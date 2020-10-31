@@ -131,30 +131,37 @@ def home():
 def populateContext(ctx, response):
     if response["tag"] == 'intent_pool_today':
         print("adding 'today' to ctx ")
-        ctx.data.intent_day = True
-        ctx.data.day = 'today'
+        ctx.data["intent_day"] = True
+        ctx.data["day"] = 'today'
 
     if response["tag"] == 'intent_pool_tomorrow':
         print("adding 'tomorrow' to ctx ")
-        ctx.data.intent_day = True
-        ctx.data.day = 'tomorrow'
+        ctx.data["intent_day"] = True
+        ctx.data["day"] = 'tomorrow'
 
     if response["tag"] == 'intent_pool_where':
         print("adding 'tomorrow' to ctx ")
-        ctx.data.intent_pool_where = True
-
+        ctx.data["intent_pool_where"] = True
 
 def checkDistrict(userText):
     districts = nlp_spacy_districts(userText)
 
+    print("=========  districts ===========")
     for token in districts:
         print("found districts: ", token.text, token.lemma_, token.pos_)
+    print("=========  END districts ===========")
+
+    print("=========  districts entities ===========")
+    print("Entities newly trained ", [(ent.text, ent.label_) for ent in districts.ents])
+    print("=========  END districts entities ===========")
+
+
 
     ner = nlp_spacy_full(userText)
-
+    print("=========  NER ===========")
     for token in ner:
         print("found ner:   ", token.text, token.lemma_, token.pos_)
-
+    print("=========  END NER ===========")
 
 @app.route("/get")
 def get_bot_response():

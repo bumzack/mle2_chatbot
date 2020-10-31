@@ -25,6 +25,18 @@ if __name__ == "__main__":
 
     print("\n\n\n\n")
 
+    sentence = "in Döbling"
+    district = nlp2(sentence)
+
+    for token in district:
+        print("district   newly trained       ", token.text, token.lemma_, token.pos_)
+
+    print("district Tokens newly trained    ", [(t.text, t.ent_type_, t.ent_iob) for t in district])
+    print("district Entities newly trained ", [(ent.text, ent.label_) for ent in district.ents])
+
+    print("\n\n\n\n")
+
+
     nlp = spacy.load("en_core_web_lg")
     pool_standard = nlp(sentence)
     for token in pool_standard:

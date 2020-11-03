@@ -137,3 +137,4 @@ dataset
 /archive/spacy/ner/
 /archive/spacy/
 /data/spacy*
+/data/sapcy_ner_trained_model

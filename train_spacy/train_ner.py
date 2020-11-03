@@ -16,6 +16,8 @@ import sys
 
 from train_spacy.spacy_ner_training_data import TRAINING_DATA
 
+SPACY_BASE_MODEL = 'en_core_web_sm'
+
 sys.path.append('./')
 
 import random
@@ -111,7 +113,7 @@ if __name__ == "__main__":
     train = True
 
     if train:
-        main('en_core_web_lg', spacy_model_dir, 100)
+        main(SPACY_BASE_MODEL, spacy_model_dir, 100)
 
     # test the saved model
     print("Loading from", spacy_model_dir)

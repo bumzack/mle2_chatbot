@@ -14,9 +14,8 @@ from __future__ import unicode_literals, print_function
 
 import sys
 
-from train_spacy.spacy_ner_training_data import TRAINING_DATA
-
-SPACY_BASE_MODEL = 'en_core_web_sm'
+from step_02_train_spacy.spacy_ner_training_data import TRAINING_DATA
+from step_03_run_server.const import SPACY_MODEL
 
 sys.path.append('./')
 
@@ -63,7 +62,7 @@ def main(model=None, output_dir=None, n_iter=100):
     # only train NER
     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
         # show warnings for misaligned entity spans once
-        warnings.filterwarnings("once", category=UserWarning, module='train_spacy')
+        warnings.filterwarnings("once", category=UserWarning, module='step_02_train_spacy')
 
         # reset and initialize the weights randomly – but only if we're
         # training a new model
@@ -113,7 +112,7 @@ if __name__ == "__main__":
     train = True
 
     if train:
-        main(SPACY_BASE_MODEL, spacy_model_dir, 100)
+        main(SPACY_MODEL, spacy_model_dir, 100)
 
     # test the saved model
     print("Loading from", spacy_model_dir)

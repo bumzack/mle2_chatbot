@@ -14,7 +14,7 @@ from __future__ import unicode_literals, print_function
 
 import sys
 
-from train_spacy.spacy_ner_training_data import TRAINING_DATA
+from step_02_train_spacy.spacy_ner_training_data import TRAINING_DATA
 
 sys.path.append('./')
 

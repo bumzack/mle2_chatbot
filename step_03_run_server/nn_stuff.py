@@ -1,14 +1,8 @@
-import os
 import random
 import sys
 
 import nltk
 import numpy as np
-import spacy
-
-TOMORROW = "tomorrow"
-
-TODAY = "today"
 
 sys.path.append('./')
 
@@ -25,28 +19,6 @@ intents = json.loads(open('../input_data/intents.json').read())
 words = pickle.load(open('../data/words.pkl', 'rb'))
 classes = pickle.load(open('../data/classes.pkl', 'rb'))
 
-STATIC_DIR = os.path.abspath('./static')
-print("STATIC DIR   ", STATIC_DIR)
-
-# ######################################################################
-# load spacy NER model
-# ######################################################################
-spacy_model_dir = "../data/sapcy_ner_trained_model"
-# spacy_model_simple_dir = "../data/spacy_simple"
-
-POOL_NAME = 2
-ADDRESS = 3
-DISTRICT = 5
-AUSLASTUNG_TODAY = 7
-AUSLASTUNG_TOMORROW = 9
-
-model_dir = spacy_model_dir
-print("Loading from: '", model_dir, "'")
-nlp_spacy_districts = spacy.load(model_dir)
-
-# TODO use en_core_web_lg
-nlp_spacy_full = spacy.load("en_core_web_sm")
-
 
 def clean_up_sentence(sentence):
     # tokenize the pattern - splitting words into array
@@ -57,7 +29,6 @@ def clean_up_sentence(sentence):
 
 
 # return bag of words array: 0 or 1 for words that exist in sentence
-
 def bag_of_words(sentence, words, show_details=True):
     # tokenizing patterns
 

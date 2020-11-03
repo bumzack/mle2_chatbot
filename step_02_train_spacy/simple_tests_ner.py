@@ -2,7 +2,7 @@ from __future__ import unicode_literals, print_function
 
 import sys
 
-SPACY_BASE_MODEL = "en_core_web_sm"
+from step_03_run_server.const import SPACY_MODEL
 
 sys.path.append('./')
 
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     model_dir = spacy_model_dir
     print("Loading from: '", model_dir,"'")
     nlp2 = spacy.load(model_dir)
-    nlp_spacy_full = spacy.load(SPACY_BASE_MODEL)
+    nlp_spacy_full = spacy.load(SPACY_MODEL)
 
     # sentence = "in döbling"
     # district = nlp2(sentence)

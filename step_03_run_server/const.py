@@ -1,11 +1,10 @@
-import csv
 import os
-import sys
 
-import spacy
+spacy_model_dir = "../data/sapcy_ner_trained_model"
+# spacy_model_simple_dir = "../data/spacy_simple"
 
-from step_03_run_server.nn_stuff import getResponse, predict_class
-from step_03_run_server.zip_mapping import district_mapping
+# TODO use en_core_web_lg
+SPACY_MODEL = "en_core_web_sm"
 
 TOMORROW = "tomorrow"
 TODAY = "today"
@@ -18,3 +17,5 @@ ADDRESS = 3
 DISTRICT = 5
 AUSLASTUNG_TODAY = 7
 AUSLASTUNG_TOMORROW = 9
+
+MODEL_DIR = spacy_model_dir

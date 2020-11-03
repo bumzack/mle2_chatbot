@@ -1,6 +1,6 @@
 import sys
 
-from train_spacy.spacy_ner_training_data import TRAINING_DATA
+from step_02_train_spacy.spacy_ner_training_data import TRAINING_DATA
 
 sys.path.append('./')
 

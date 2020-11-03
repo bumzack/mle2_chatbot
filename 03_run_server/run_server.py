@@ -1,3 +1,4 @@
+import csv
 import os
 import random
 import sys
@@ -36,6 +37,13 @@ print("Loading from: '", model_dir, "'")
 nlp_spacy_districts = spacy.load(model_dir)
 
 
+# ########### laod csv
+with open('../data/SCHWIMMBADOGD.csv', newline='') as csvfile:
+     pool_data = csv.reader(csvfile, delimiter=',')
+     for row in pool_data:
+         print(', '.join(row))
+
+xxx
 
 nlp_spacy_full = spacy.load("en_core_web_lg")
 

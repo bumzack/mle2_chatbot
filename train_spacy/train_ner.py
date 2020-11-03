@@ -18,7 +18,6 @@ from train_spacy.spacy_ner_training_data import TRAINING_DATA
 
 sys.path.append('./')
 
-
 import random
 import warnings
 from pathlib import Path
@@ -26,7 +25,6 @@ from pathlib import Path
 import plac
 import spacy
 from spacy.util import minibatch, compounding
-
 
 
 @plac.annotations(
@@ -70,6 +68,7 @@ def main(model=None, output_dir=None, n_iter=100):
         if model is None:
             nlp.begin_training()
         for itn in range(n_iter):
+            print("iter " + str(itn) + "/" + str(n_iter))
             random.shuffle(TRAINING_DATA)
             losses = {}
             # batch up the examples using spaCy's minibatch

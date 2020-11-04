@@ -1,9 +1,11 @@
 import sys
 
 import spacy
+from flask import session, request
 
-from step_03_run_server.const import MODEL_DIR, TODAY, TOMORROW
-
+from step_03_run_server.botcontext import BotContext
+from step_03_run_server.const import MODEL_DIR, TODAY, TOMORROW, SPACY_MODEL
+from step_03_run_server.nn_stuff import predict_class, getResponse, intents
 
 sys.path.append('./')
 
@@ -16,17 +18,49 @@ nlp_spacy_full = spacy.load(SPACY_MODEL)
 def populateContext(ctx, response):
     if response["tag"] == 'intent_pool_today':
         print("adding 'today' to ctx ")
-        ctx.data["intent_day"] = True
-        ctx.data["day"] = 'today'
+        ctx.setIntentPoolToday()
+        ctx.setDay(TODAY)
 
     if response["tag"] == 'intent_pool_tomorrow':
         print("adding 'tomorrow' to ctx ")
-        ctx.data["intent_day"] = True
-        ctx.data["day"] = 'tomorrow'
+        ctx.setIntentPoolTomorrow()
+        ctx.setDay(TOMORROW)
 
     if response["tag"] == 'intent_pool_where':
-        print("adding 'tomorrow' to ctx ")
-        ctx.data["intent_pool_where"] = True
+        print("adding 'intent_pool_where' to ctx ")
+        ctx.setIntentPoolWhere()
+
+    if response["tag"] == 'intent_greeting':
+        print("adding 'intent_greeting' to ctx ")
+        ctx.setIntentGreeting()
+
+    if response["tag"] == 'intent_goodbye':
+        print("adding 'intent_goodbye' to ctx ")
+        ctx.setIntentGoodBye()
+
+    if response["tag"] == 'intent_thanks':
+        print("adding 'intent_thanks' to ctx ")
+        ctx.setIntentThanks()
+
+    if response["tag"] == 'intent_noanswer':
+        print("adding 'intent_noanswer' to ctx ")
+        ctx.setIntentNoanswer()
+
+    if response["tag"] == 'intent_options':
+        print("adding 'intent_options' to ctx ")
+        ctx.setIntentOptions()
+
+    if response["tag"] == 'intent_user_bored':
+        print("adding 'intent_user_bored' to ctx ")
+        ctx.setIntentUSerBored()
+
+    if response["tag"] == 'intent_user_not_happy':
+        print("adding 'intent_user_not_happy' to ctx ")
+        ctx.setIntentUseNotHappy()
+
+    if response["tag"] == 'intent_user_approve':
+        print("adding 'intent_user_approve' to ctx ")
+        ctx.setIntentUserApprove()
 
 
 def checkDistrict(userText):
@@ -74,3 +108,42 @@ def checkDay(userText):
             if d.lower() == TOMORROW:
                 print("checkDay: found TOMORROW")
                 return TOMORROW
+
+
+def extract_infos_from_user_input(ctx: BotContext, userText: str):
+    district = checkDistrict(userText)
+    if not district is None:
+        ctx.setDistrict(district)
+    day = checkDay(userText)
+    if not day is None:
+        ctx.setDay(day)
+
+
+def get_context():
+    ctx = BotContext()
+    if not session.get("context") is None:
+        data = session.get("context")
+        ctx.data = data
+        ctx.print_context("at beginning of request")
+    else:
+        print("====== no context on session object found =======")
+    return ctx
+
+
+def handle_user_request():
+    ctx = get_context()
+
+    userText = request.args.get('msg')
+    ints = predict_class(userText)
+
+    extract_infos_from_user_input(ctx, userText)
+
+    # contains a random response depending on the intent found
+    response = getResponse(ints, intents)
+    populateContext(ctx, response)
+    # print("response: " + response["response"])
+    session["context"] = ctx.data
+
+    ctx.print_context("ctx at end of method")
+
+    return response

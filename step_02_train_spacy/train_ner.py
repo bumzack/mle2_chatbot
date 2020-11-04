@@ -85,10 +85,10 @@ def main(model=None, output_dir=None, n_iter=100):
             print("Losses", losses)
 
     # test the trained model
-    for text, _ in TRAINING_DATA:
-        doc = nlp(text)
-        print("TrainData  Entities", [(ent.text, ent.label_) for ent in doc.ents])
-        print("TrainData  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
+    # for text, _ in TRAINING_DATA:
+    #     doc = nlp(text)
+    #     print("TrainData  Entities", [(ent.text, ent.label_) for ent in doc.ents])
+    #     print("TrainData  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
 
     # save model to output directory
     if output_dir is not None:
@@ -98,13 +98,13 @@ def main(model=None, output_dir=None, n_iter=100):
         nlp.to_disk(output_dir)
         print("Saved model to", output_dir)
 
-        # test the saved model
-        print("Loading from", output_dir)
-        nlp2 = spacy.load(output_dir)
-        for text, _ in TRAINING_DATA:
-            doc = nlp2(text)
-            print("TrainData2  Entities", [(ent.text, ent.label_) for ent in doc.ents])
-            print("TrainData2  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
+        # # test the saved model
+        # print("Loading from", output_dir)
+        # nlp2 = spacy.load(output_dir)
+        # for text, _ in TRAINING_DATA:
+        #     doc = nlp2(text)
+        #     print("TrainData2  Entities", [(ent.text, ent.label_) for ent in doc.ents])
+        #     print("TrainData2  Tokens", [(t.text, t.ent_type_, t.ent_iob) for t in doc])
 
 
 if __name__ == "__main__":

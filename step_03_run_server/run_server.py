@@ -1,16 +1,11 @@
 import sys
 
-from step_03_run_server.botcontext import BotContext
 from step_03_run_server.const import STATIC_DIR
-from step_03_run_server.load_pool_data import PoolData
-from step_03_run_server.ner_stuff import checkDistrict, checkDay, populateContext, handle_user_request
-from step_03_run_server.nn_stuff import getResponse, predict_class, intents
+from step_03_run_server.ner_stuff import handle_user_request
 
 sys.path.append('./')
 
-from flask import Flask, render_template, request, session
-
-poolData = PoolData()
+from flask import Flask, render_template
 
 app = Flask(__name__, static_folder=STATIC_DIR)
 

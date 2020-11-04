@@ -1,19 +1,19 @@
 class BotContext:
     def __init__(self):
         self.data = {
-            "intent_greeting": None,
-            "intent_goodbye": None,
-            "intent_thanks": None,
-            "intent_noanswer": None,
-            "intent_options": None,
-            "intent_user_bored": None,
-            "intent_pool_today": None,
-            "intent_pool_tomorrow": None,
-            "intent_pool_where": None,
-            "intent_user_not_happy": None,
-            "intent_user_approve": None,
-            "day": None,
-            "district": None
+            "intent_greeting": False,
+            "intent_goodbye": False,
+            "intent_thanks": False,
+            "intent_noanswer": False,
+            "intent_options": False,
+            "intent_user_bored": False,
+            "intent_pool_today": False,
+            "intent_pool_tomorrow": False,
+            "intent_pool_where": False,
+            "intent_user_not_happy": False,
+            "intent_user_approve": False,
+            "day": "",
+            "district": ""
         }
 
     def setDay(self, day=None):
@@ -62,3 +62,48 @@ class BotContext:
         for key, value in self.data.items():
             print(key, ' -> ', value)
         print("========================")
+
+    def getDay(self) -> str:
+        return self.data["day"]
+
+    def getDistrict(self) -> str:
+        return self.data["district"]
+
+    def hasDay(self) -> bool:
+        return self.data["day"] != ""
+
+    def hasDistrict(self) -> bool:
+        return self.data["district"] != ""
+
+    def getIntentGreeting(self) -> bool:
+        return self.data["intent_greeting"]
+
+    def getIntentGoodBye(self) -> bool:
+        return self.data["intent_goodbye"]
+
+    def getIntentThanks(self) -> bool:
+        return self.data["intent_thanks"]
+
+    def getIntentNoanswer(self) -> bool:
+        return self.data["intent_noanswer"]
+
+    def getIntentOptions(self) -> bool:
+        return self.data["intent_options"]
+
+    def getIntentUSerBored(self) -> bool:
+        return self.data["intent_user_bored"]
+
+    def getIntentPoolToday(self) -> bool:
+        return self.data["intent_pool_today"]
+
+    def getIntentPoolTomorrow(self) -> bool:
+        return self.data["intent_pool_tomorrow"]
+
+    def getIntentPoolWhere(self) -> bool:
+        return self.data["intent_pool_where"]
+
+    def getIntentUseNotHappy(self) -> bool:
+        return self.data["intent_user_not_happy"]
+
+    def getIntentUserApprove(self) -> bool:
+        return self.data["intent_user_approve"]

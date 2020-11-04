@@ -71,8 +71,8 @@ def getResponse(ints, intents_json):
             msg2 = "getResponse     found intent: " + str(i)
             serverlog.append(msg1 + "\n")
             serverlog.append(msg2 + "\n")
-            print("getResponse  predicted class: %s", ints)
-            print("getResponse     found intent: %s ", i)
+            print("getResponse  predicted class:  ", ints)
+            print("getResponse     found intent:  ", i)
             result = random.choice(i['responses'])
             break
 

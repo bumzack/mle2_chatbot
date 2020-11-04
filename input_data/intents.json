@@ -89,12 +89,12 @@
       "tag": "intent_user_bored",
       "patterns": [
         "I am bored - what can i do today",
-        "I have a little time - what can I do",
+        "I have some time - what can I do",
         "Tell me something fun to do"
       ],
       "responses": [
         "You could spent some time at a pool and relax?",
-        "I could offer you a visit public pool in Viennea"
+        "I could offer you a visit public pool in Vienna"
       ],
       "context": [
         ""
@@ -103,9 +103,9 @@
     {
       "tag": "intent_pool_today",
       "patterns": [
-        "I am bored - what can i do today",
-        "I have a little time - what can I do",
-        "Tell me something fun to do"
+        "What can i do today",
+        "I'd like to do something today",
+        "Tell me something fun to do today"
       ],
       "responses": [
         "You could spent some time at a pool and relax?"
@@ -117,7 +117,7 @@
     {
       "tag": "intent_pool_tomorrow",
       "patterns": [
-        "I am bored - what can i do tomorrow",
+        "What can i do tomorrow",
         "Tomorrow I have a some spare time - what can I do",
         "Tell me something fun to do tomorrow"
       ],
@@ -140,7 +140,9 @@
         "Tell me some locations of pools"
       ],
       "responses": [
-        "Please tell me your preferred district for your visit?"
+        "Please tell me your preferred district for your visit?",
+        "Sure, where in Vienna?",
+        "Good idea - where do you wanna go?"
       ],
       "context": [
         ""

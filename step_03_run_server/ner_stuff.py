@@ -5,9 +5,12 @@ from flask import session, request
 
 from step_03_run_server.botcontext import BotContext
 from step_03_run_server.const import MODEL_DIR, TODAY, TOMORROW, SPACY_MODEL
+from step_03_run_server.load_pool_data import PoolData
 from step_03_run_server.nn_stuff import predict_class, getResponse, intents
 
 sys.path.append('./')
+
+poolData = PoolData()
 
 print("Loading from: '", MODEL_DIR, "'")
 nlp_spacy_districts = spacy.load(MODEL_DIR)
@@ -130,6 +133,26 @@ def get_context():
     return ctx
 
 
+def response_based_on_context_and_intent(ctx: BotContext, intent: str) -> str:
+    response = ""
+    if ctx.hasDay() and not ctx.hasDistrict():
+        response = "you want to go to a pool {}, but i don't know where! Tell me the zip code or name of a district!".format(ctx.getDay())
+    elif not ctx.hasDay() and ctx.hasDistrict():
+        response = "you want to go to a pool in {}, but i don't know when! Tell me when you want to go - today or tomorrow?".format(
+            ctx.getDistrict())
+    elif ctx.hasDay() and ctx.hasDistrict():
+        data = poolData.get_pools_for_day_and_district(ctx.getDay(), ctx.getDistrict())
+        if data is None:
+            return "i am sorry - but i couldn't find any data for your choise: day: {}, district: {}".format(ctx.getDay(),
+                                                                                                             ctx.getDistrict())
+        response = "Nice! - i found the following pools for you: \n" + data
+        response = response + "\n" + "Are you happy with this information?"
+    else:
+        response = ""
+
+    return response
+
+
 def handle_user_request():
     ctx = get_context()
 
@@ -139,11 +162,17 @@ def handle_user_request():
     extract_infos_from_user_input(ctx, userText)
 
     # contains a random response depending on the intent found
-    response = getResponse(ints, intents)
-    populateContext(ctx, response)
+    default_response_based_on_intent = getResponse(ints, intents)
+
+    # if there is a better repsonse with more specific feedback, than solely based on the intent, overwrite the response text
+    response_ner = response_based_on_context_and_intent(ctx, default_response_based_on_intent["tag"])
+    if response_ner != "":
+        default_response_based_on_intent["response"] = response_ner
+
+    populateContext(ctx, default_response_based_on_intent)
     # print("response: " + response["response"])
     session["context"] = ctx.data
 
     ctx.print_context("ctx at end of method")
 
-    return response
+    return default_response_based_on_intent

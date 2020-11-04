@@ -1,7 +1,8 @@
 import csv
 import sys
+from typing import Optional
 
-from step_03_run_server.const import POOL_NAME, AUSLASTUNG_TODAY, AUSLASTUNG_TOMORROW, ADDRESS, DISTRICT
+from step_03_run_server.const import POOL_NAME, AUSLASTUNG_TODAY, AUSLASTUNG_TOMORROW, ADDRESS, DISTRICT, TOMORROW
 from step_03_run_server.zip_mapping import district_mapping
 
 sys.path.append('./')
@@ -41,3 +42,31 @@ class PoolData:
 
     def findByDistrict(self, district):
         pass
+
+    def get_pools_for_day_and_district(self, day: str, district: str) -> Optional[str]:
+        pools = []
+        for p in self.pool_data:
+            if p["district"] == district:
+                print("found district   '{}'".format(district))
+                entry = {
+                    "name": p["name"],
+                    "address": p["address"],
+                }
+                if day == TOMORROW:
+                    entry["auslastung"] = p[AUSLASTUNG_TOMORROW]
+                else:
+                    entry["auslastung"] = p[AUSLASTUNG_TODAY]
+
+                pools.append(entry)
+
+        resp = ""
+        if len(pools) < 1:
+            return None
+        else:
+            for p in pools:
+                tmp = ""
+                for key, value in p.values():
+                    tmp = tmp + " " + key + ": " + value
+                resp = resp + tmp + "\n"
+
+        return resp

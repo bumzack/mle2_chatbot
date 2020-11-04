@@ -5,8 +5,8 @@ from flask import session, request
 
 from step_03_run_server.botcontext import BotContext
 from step_03_run_server.const import MODEL_DIR, TODAY, TOMORROW, SPACY_MODEL
-from step_03_run_server.load_pool_data import PoolData
 from step_03_run_server.nn_stuff import predict_class, getResponse, intents
+from step_03_run_server.pool_data import PoolData
 
 sys.path.append('./')
 
@@ -14,7 +14,6 @@ poolData = PoolData()
 
 print("Loading from: '", MODEL_DIR, "'")
 nlp_spacy_districts = spacy.load(MODEL_DIR)
-
 nlp_spacy_full = spacy.load(SPACY_MODEL)
 
 
@@ -147,8 +146,6 @@ def response_based_on_context_and_intent(ctx: BotContext, intent: str) -> str:
                                                                                                              ctx.getDistrict())
         response = "Nice! - i found the following pools for you: \n" + data
         response = response + "\n" + "Are you happy with this information?"
-    else:
-        response = ""
 
     return response
 

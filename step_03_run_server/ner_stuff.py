@@ -139,24 +139,30 @@ def response_based_on_context_and_intent(ctx: BotContext, intent: str) -> str:
     response = ""
     if ctx.hasDay() and not ctx.hasDistrict():
         print("ctx.hasDay() and not ctx.hasDistrict()")
-        response = "you want to go to a pool {}, but i don't know where! Tell me the zip code or name of a district!".format(ctx.getDay())
+        response = "You want to go to a pool {}, but i don't know where! Tell me the zip code or name of a district!".format(ctx.getDay())
     elif not ctx.hasDay() and ctx.hasDistrict():
         print("elif not ctx.hasDay() and ctx.hasDistrict()")
-        response = "you want to go to a pool in {}, but i don't know when! Tell me when you want to go - today or tomorrow?".format(
+        response = "You want to go to a pool in {}, but i don't know when! Tell me when you want to go - today or tomorrow?".format(
             ctx.getDistrict())
     elif ctx.getShownPools() and intent == "intent_user_approve":
         print("ctx.getShownPools() and intent ==  intent_user_approve")
-        response = "i am happy you are happy :-)"
+        response = "I am happy you are happy :-)"
+    elif ctx.getShownPools() and intent == "intent_user_not_happy":
+        print("ctx.getShownPools() and intent ==  intent_user_not_happy")
+        response = "Oh - that's not good - maybe choose another district or day?"
     elif ctx.getShownPools() and intent == "intent_goodbye":
         print("ctx.getShownPools() and intent ==  intent_goodbye")
         response = "bye!"
+    elif ctx.getShownPools() and intent == "intent_user_bored":
+        print("ctx.getShownPools() and intent ==  intent_user_bored")
+        response = "Sorry you're bored - I already showed you some addresses of public pools!"
     elif ctx.hasDay() and ctx.hasDistrict():
         print("ctx.hasDay() and ctx.hasDistrict()")
         # ctx.print_context("before calling get_pools_for_day_and_district")
         # print("calling   get_pools_for_day_and_district  with day {} and district {}".format(ctx.getDay(), ctx.getDistrict()))
         data = poolData.get_pools_for_day_and_district(ctx.getDay(), ctx.getDistrict())
         if data is None:
-            return "i am sorry - but i couldn't find any data for your choice: day: {}, district: {}".format(ctx.getDay(),
+            return "I am sorry - but i couldn't find any data for your choice: day: {}, district: {}".format(ctx.getDay(),
                                                                                                              ctx.getDistrict())
         response = "Nice! - i found the following pools for you: " + data
         response = response + "<br><br>Are you happy with this information?"

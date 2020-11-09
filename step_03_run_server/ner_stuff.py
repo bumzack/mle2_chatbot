@@ -13,56 +13,56 @@ sys.path.append('./')
 
 poolData = PoolData()
 
-print("Loading from: '", MODEL_DIR, "'")
+# print("Loading from: '", MODEL_DIR, "'")
 nlp_spacy_districts = spacy.load(MODEL_DIR)
 nlp_spacy_full = spacy.load(SPACY_MODEL)
 
 
 def populateContext(ctx, response):
     if response["tag"] == 'intent_pool_today':
-        print("adding 'today' to ctx ")
+        # print("adding 'today' to ctx ")
         ctx.setIntentPoolToday()
         ctx.setDay(TODAY)
 
     if response["tag"] == 'intent_pool_tomorrow':
-        print("adding 'tomorrow' to ctx ")
+        # print("adding 'tomorrow' to ctx ")
         ctx.setIntentPoolTomorrow()
         ctx.setDay(TOMORROW)
 
     if response["tag"] == 'intent_pool_where':
-        print("adding 'intent_pool_where' to ctx ")
+        # print("adding 'intent_pool_where' to ctx ")
         ctx.setIntentPoolWhere()
 
     if response["tag"] == 'intent_greeting':
-        print("adding 'intent_greeting' to ctx ")
+        # print("adding 'intent_greeting' to ctx ")
         ctx.setIntentGreeting()
 
     if response["tag"] == 'intent_goodbye':
-        print("adding 'intent_goodbye' to ctx ")
+        # print("adding 'intent_goodbye' to ctx ")
         ctx.setIntentGoodBye()
 
     if response["tag"] == 'intent_thanks':
-        print("adding 'intent_thanks' to ctx ")
+        # print("adding 'intent_thanks' to ctx ")
         ctx.setIntentThanks()
 
     if response["tag"] == 'intent_noanswer':
-        print("adding 'intent_noanswer' to ctx ")
+        # print("adding 'intent_noanswer' to ctx ")
         ctx.setIntentNoanswer()
 
     if response["tag"] == 'intent_options':
-        print("adding 'intent_options' to ctx ")
+        # print("adding 'intent_options' to ctx ")
         ctx.setIntentOptions()
 
     if response["tag"] == 'intent_user_bored':
-        print("adding 'intent_user_bored' to ctx ")
+        # print("adding 'intent_user_bored' to ctx ")
         ctx.setIntentUSerBored()
 
     if response["tag"] == 'intent_user_not_happy':
-        print("adding 'intent_user_not_happy' to ctx ")
+        # print("adding 'intent_user_not_happy' to ctx ")
         ctx.setIntentUseNotHappy()
 
     if response["tag"] == 'intent_user_approve':
-        print("adding 'intent_user_approve' to ctx ")
+        # print("adding 'intent_user_approve' to ctx ")
         ctx.setIntentUserApprove()
 
 
@@ -83,13 +83,8 @@ def checkDistrict(userText):
     print("filtered districts ", [d for d in districts])
     print("=========  checkDistrict END filtered  districts entities ===========")
 
-    ner = nlp_spacy_full(userText)
-    print("=========  checkDistrict NER ===========")
-    for token in ner:
-        print("found ner:   ", token.text, token.lemma_, token.pos_)
-    print("=========  checkDistrict END NER ===========")
-
     if len(districts) > 0:
+        print("found a district: {}".format(districts[0]))
         return districts[0]
 
     return None
@@ -125,6 +120,7 @@ def extract_infos_from_user_input(ctx: BotContext, userText: str):
     # has user entered a "date" (today or tomorrow) ?
     day = checkDay(userText)
     if not day is None:
+        print("setting day to {}".format(day))
         ctx.setDay(day)
 
 
@@ -134,27 +130,37 @@ def get_context():
         data = session.get("context")
         ctx.data = data
         ctx.print_context("at beginning of request")
-    else:
-        print("====== no context on session object found =======")
+    # else:
+    # print("====== no context on session object found =======")
     return ctx
 
 
 def response_based_on_context_and_intent(ctx: BotContext, intent: str) -> str:
     response = ""
     if ctx.hasDay() and not ctx.hasDistrict():
+        print("ctx.hasDay() and not ctx.hasDistrict()")
         response = "you want to go to a pool {}, but i don't know where! Tell me the zip code or name of a district!".format(ctx.getDay())
     elif not ctx.hasDay() and ctx.hasDistrict():
+        print("elif not ctx.hasDay() and ctx.hasDistrict()")
         response = "you want to go to a pool in {}, but i don't know when! Tell me when you want to go - today or tomorrow?".format(
             ctx.getDistrict())
+    elif ctx.getShownPools() and intent == "intent_user_approve":
+        print("ctx.getShownPools() and intent ==  intent_user_approve")
+        response = "i am happy you are happy :-)"
+    elif ctx.getShownPools() and intent == "intent_goodbye":
+        print("ctx.getShownPools() and intent ==  intent_goodbye")
+        response = "bye!"
     elif ctx.hasDay() and ctx.hasDistrict():
-        ctx.print_context("before calling get_pools_for_day_and_district")
-        print("calling   get_pools_for_day_and_district  with day {} and district {}".format(ctx.getDay(), ctx.getDistrict()))
+        print("ctx.hasDay() and ctx.hasDistrict()")
+        # ctx.print_context("before calling get_pools_for_day_and_district")
+        # print("calling   get_pools_for_day_and_district  with day {} and district {}".format(ctx.getDay(), ctx.getDistrict()))
         data = poolData.get_pools_for_day_and_district(ctx.getDay(), ctx.getDistrict())
         if data is None:
             return "i am sorry - but i couldn't find any data for your choice: day: {}, district: {}".format(ctx.getDay(),
                                                                                                              ctx.getDistrict())
-        response = "Nice! - i found the following pools for you: \n" + data
-        response = response + "\n" + "Are you happy with this information?"
+        response = "Nice! - i found the following pools for you: " + data
+        response = response + "<br><br>Are you happy with this information?"
+        ctx.setShownPools(True)
 
     return response
 
@@ -165,6 +171,7 @@ def handle_user_request():
     userText = request.args.get('msg')
     ints = predict_class(userText)
 
+    print("userText: {}".format(userText))
     extract_infos_from_user_input(ctx, userText)
 
     # contains a random response depending on the intent found

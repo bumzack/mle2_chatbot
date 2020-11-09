@@ -13,7 +13,8 @@ class BotContext:
             "intent_user_not_happy": False,
             "intent_user_approve": False,
             "day": "",
-            "district": ""
+            "district": "",
+            "shown_pools": False
         }
 
     def setDay(self, day=None):
@@ -21,6 +22,9 @@ class BotContext:
 
     def setDistrict(self, district=None):
         self.data["district"] = district
+
+    def setShownPools(self, val: bool = False):
+        self.data["shown_pools"] = val
 
     def setIntentGreeting(self):
         self.data["intent_greeting"] = True
@@ -107,3 +111,6 @@ class BotContext:
 
     def getIntentUserApprove(self) -> bool:
         return self.data["intent_user_approve"]
+
+    def getShownPools(self) -> bool:
+        return self.data["shown_pools"]

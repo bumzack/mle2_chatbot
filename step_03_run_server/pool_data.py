@@ -20,9 +20,9 @@ class PoolData:
                     i = i + 1
                     continue
 
-                print('row ' + str(i) + "     ")
-                for f in row:
-                    print("field    {}".format(f))
+                # print('row ' + str(i) + "     ")
+                # for f in row:
+                #     print("field    {}".format(f))
 
                 # print('row ' + str(i) +
                 #       '     name:  ' + row[POOL_NAME] + ' \n       address: ' + row[ADDRESS] + ',  district:   "' + row[
@@ -40,7 +40,7 @@ class PoolData:
                     'utilization_today': row[UTILIZATION_TODAY],
                     'utilization_tomorrow': row[UTILIZATION_TOMORROW]
                 }
-                print("entry: {}".format(entry))
+                # print("entry: {}".format(entry))
 
                 self.pool_data.append(entry)
 
@@ -53,7 +53,7 @@ class PoolData:
         pass
 
     def get_pools_for_day_and_district(self, day: str, district: str) -> Optional[str]:
-        print("get_pools_for_day_and_district()  day: {}, district: {} ".format(day, district))
+        # print("get_pools_for_day_and_district()  day: {}, district: {} ".format(day, district))
         pools = []
 
         max_sim = 0
@@ -67,9 +67,9 @@ class PoolData:
             return None
 
         for p in self.pool_data:
-            print("comparing p[district] = {}   with zip_code = {}".format(p["district"], zip_code))
+            # print("comparing p[district] = {}   with zip_code = {}".format(p["district"], zip_code))
             if str(p["district"]) == str(zip_code):
-                print("found district   '{}'".format(district))
+                # print("found district   '{}'".format(district))
                 entry = {
                     "name": p["name"],
                     "address": p["address"],
@@ -88,9 +88,9 @@ class PoolData:
             return None
         else:
             for p in pools:
-                tmp = ""
-                for key, value in p.values():
-                    tmp = tmp + " " + key + ": " + value
-                resp = resp + tmp + "\n"
+                tmp = "<br/>"
+                for key, value in p.items():
+                    tmp = tmp + value + ", "
+                resp = resp + tmp + "<br/>"
 
         return resp

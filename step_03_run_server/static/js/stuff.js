@@ -24,6 +24,8 @@ $( document ).ready(function() {
             $("#serverlog").html(serverlog);
 
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+            $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
+
         });
     }
 

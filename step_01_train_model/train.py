@@ -57,23 +57,23 @@ print("documents: ", documents)
 
 words = [lemmatizer.lemmatize(w.lower()) for w in words if w not in ignore_letters]
 
-print("words: ", words)
+# print("words: ", words)
 
 words = sorted(list(set(words)))
 
-print("words sorted: ", words)
+#print("words sorted: ", words)
 
 # sort classes
 classes = sorted(list(set(classes)))
 
-print("classes sorted: ", classes)
+#print("classes sorted: ", classes)
 
 # documents = combination between patterns and intents
-print(len(documents), "documents")
+# print(len(documents), "documents")
 # classes = intents
-print(len(classes), "classes", classes)
+# print(len(classes), "classes", classes)
 # words = all words, vocabulary
-print(len(words), "unique lemmatized words", words)
+#print(len(words), "unique lemmatized words", words)
 pickle.dump(words, open('../data/words.pkl', 'wb'))
 pickle.dump(classes, open('../data/classes.pkl', 'wb'))
 
@@ -106,7 +106,7 @@ training = np.array(training)
 train_x = list(training[:, 0])
 train_y = list(training[:, 1])
 
-print("Training data is created")
+print  #("Training data is created")
 
 ##### train the model
 

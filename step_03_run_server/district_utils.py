@@ -65,7 +65,7 @@ def word_sim(w1: str, w2: str):
     doc1 = nlp_spacy_full(w1)
     doc2 = nlp_spacy_full(w2)
     sim = doc1.similarity(doc2)
-    print("simularity between: {} and {}: {}".format(w1, w2, sim))
+    # print("simularity between: {} and {}: {}".format(w1, w2, sim))
     return sim
 
 
@@ -80,5 +80,10 @@ def find_best_district_match(district: str) -> Optional[str]:
 
     if max_sim > THRESHOLD_SIMILARITY and not max_sim_district is None:
         return max_sim_district
+
+    # find by zipcode
+    for name, zipcode in district_name_mapping.items():
+        if str(zipcode) == str(district):
+            return name
 
     return None

@@ -84,7 +84,8 @@
         "What you can do",
         "What help do you provide",
         "How you can be helpful",
-        "What support is offered by this service"
+        "What support is offered by this service",
+        "What is your purpose"
       ],
       "responses": [
         "I am here to help you spend a nice summer day in Vienna!",
@@ -134,9 +135,9 @@
         "Tell me some locations of pools"
       ],
       "responses": [
-        "Please tell me your preferred district for your visit?",
-        "Sure, where in Vienna?",
-        "Good idea - where do you wanna go?"
+        "You want to go to a pool? Please tell me your preferred district for your visit?",
+        "You want to go to a pool? Sure, where in Vienna?",
+        "You want to go to a pool?  Good idea - where do you wanna go?"
       ],
       "context": [
         ""
@@ -163,10 +164,27 @@
       "tag": "intent_user_approve",
       "patterns": [
         "sounds great",
-        "ok"
+        "ok",
+        "yes",
+        "fine",
+        "good",
+        "nice"
       ],
       "responses": [
         "Nice - tell me where do you wanna go?"
+      ],
+      "context": [
+        ""
+      ]
+    },
+    {
+      "tag": "intent_date",
+      "patterns": [
+        "today",
+        "tomorrow"
+      ],
+      "responses": [
+        "good - now i know when :-)"
       ],
       "context": [
         ""

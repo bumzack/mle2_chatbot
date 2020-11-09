@@ -10,7 +10,7 @@ TOMORROW = "tomorrow"
 TODAY = "today"
 
 STATIC_DIR = os.path.abspath('./static')
-print("STATIC DIR   ", STATIC_DIR)
+# print("STATIC DIR   ", STATIC_DIR)
 
 POOL_NAME = 2
 ADDRESS = 3

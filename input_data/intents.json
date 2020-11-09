@@ -4,7 +4,6 @@
       "tag": "intent_greeting",
       "patterns": [
         "Hi there",
-        "How are you",
         "Is anyone there?",
         "Hey",
         "Hola",
@@ -12,9 +11,20 @@
         "Good day"
       ],
       "responses": [
-        "Hello, thanks for asking",
-        "Good to see you again",
+        "Hi - nice to meet you",
         "Hi there, how can I help?"
+      ],
+      "context": [
+        ""
+      ]
+    },
+    {
+      "tag": "intent_greeting",
+      "patterns": [
+        "How are you"
+      ],
+      "responses": [
+        "Hello, thanks for asking - I am fine. How can i help you?"
       ],
       "context": [
         ""
@@ -26,13 +36,13 @@
         "Bye",
         "See you later",
         "Goodbye",
-        "Nice chatting to you, bye",
+        "Nice chatting with you, bye",
         "Till next time"
       ],
       "responses": [
         "See you!",
         "Have a nice day",
-        "Bye! Come back again soon."
+        "Bye!"
       ],
       "context": [
         ""
@@ -60,9 +70,8 @@
       "tag": "intent_noanswer",
       "patterns": [],
       "responses": [
-        "Sorry, can't understand you",
-        "Please give me more info",
-        "Not sure I understand"
+        "Sorry, but I can't understand you",
+        "Please give me more info, I don't know how to help!"
       ],
       "context": [
         ""
@@ -71,15 +80,15 @@
     {
       "tag": "intent_options",
       "patterns": [
-        "How you could help me",
+        "How can you help me",
         "What you can do",
         "What help do you provide",
         "How you can be helpful",
         "What support is offered by this service"
       ],
       "responses": [
-        "I am here to help spend a nice summer day in Vienna",
-        "My power is to help you find a public swimming pool."
+        "I am here to help you spend a nice summer day in Vienna!",
+        "My power is to help you find a public swimming pool!"
       ],
       "context": [
         ""
@@ -88,9 +97,8 @@
     {
       "tag": "intent_user_bored",
       "patterns": [
-        "I am bored - what can i do today",
-        "I have some time - what can I do",
-        "Tell me something fun to do"
+        "I am bored ",
+        "bored"
       ],
       "responses": [
         "You could spent some time at a pool and relax?",
@@ -101,28 +109,14 @@
       ]
     },
     {
-      "tag": "intent_pool_today",
+      "tag": "intent_pool",
       "patterns": [
-        "What can i do today",
-        "I'd like to do something today",
-        "Tell me something fun to do today"
+        "What can i do",
+        "I'd like to do something",
+        "Tell me something fun to do"
       ],
       "responses": [
         "You could spent some time at a pool and relax?"
-      ],
-      "context": [
-        ""
-      ]
-    },
-    {
-      "tag": "intent_pool_tomorrow",
-      "patterns": [
-        "What can i do tomorrow",
-        "Tomorrow I have a some spare time - what can I do",
-        "Tell me something fun to do tomorrow"
-      ],
-      "responses": [
-        "I recommend you go visit a public pool tomorrow!"
       ],
       "context": [
         ""
@@ -172,7 +166,7 @@
         "ok"
       ],
       "responses": [
-        "Nice - tell me where do you wanna?"
+        "Nice - tell me where do you wanna go?"
       ],
       "context": [
         ""

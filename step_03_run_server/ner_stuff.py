@@ -5,6 +5,7 @@ from flask import session, request
 
 from step_03_run_server.botcontext import BotContext
 from step_03_run_server.const import MODEL_DIR, TODAY, TOMORROW, SPACY_MODEL
+from step_03_run_server.district_utils import find_best_district_match
 from step_03_run_server.nn_stuff import predict_class, getResponse, intents
 from step_03_run_server.pool_data import PoolData
 
@@ -74,7 +75,9 @@ def checkDistrict(userText):
     districts = []
     for ent in spacy_districts.ents:
         if ent.label_ == "VIE_DIS":
-            districts.append(ent.text)
+            d = find_best_district_match(ent.text)
+            if not d is None:
+                districts.append(d)
 
     print("=========  checkDistrict: filtered districts entities ===========")
     print("filtered districts ", [d for d in districts])
@@ -113,9 +116,13 @@ def checkDay(userText):
 
 
 def extract_infos_from_user_input(ctx: BotContext, userText: str):
+    # has user entered a district?
     district = checkDistrict(userText)
     if not district is None:
+        print("setting district to {}".format(district))
         ctx.setDistrict(district)
+
+    # has user entered a "date" (today or tomorrow) ?
     day = checkDay(userText)
     if not day is None:
         ctx.setDay(day)
@@ -140,9 +147,11 @@ def response_based_on_context_and_intent(ctx: BotContext, intent: str) -> str:
         response = "you want to go to a pool in {}, but i don't know when! Tell me when you want to go - today or tomorrow?".format(
             ctx.getDistrict())
     elif ctx.hasDay() and ctx.hasDistrict():
+        ctx.print_context("before calling get_pools_for_day_and_district")
+        print("calling   get_pools_for_day_and_district  with day {} and district {}".format(ctx.getDay(), ctx.getDistrict()))
         data = poolData.get_pools_for_day_and_district(ctx.getDay(), ctx.getDistrict())
         if data is None:
-            return "i am sorry - but i couldn't find any data for your choise: day: {}, district: {}".format(ctx.getDay(),
+            return "i am sorry - but i couldn't find any data for your choice: day: {}, district: {}".format(ctx.getDay(),
                                                                                                              ctx.getDistrict())
         response = "Nice! - i found the following pools for you: \n" + data
         response = response + "\n" + "Are you happy with this information?"

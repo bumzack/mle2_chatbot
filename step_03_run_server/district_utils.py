@@ -1,3 +1,13 @@
+from typing import Optional
+
+import spacy
+
+from step_03_run_server.const import SPACY_MODEL
+
+THRESHOLD_SIMILARITY = 0.8
+
+nlp_spacy_full = spacy.load(SPACY_MODEL)
+
 district_zip_mapping = {
     "1": 1010,
     "2": 1020,
@@ -49,3 +59,26 @@ district_name_mapping = {
     "Donaustadt": 1220,
     "Liesing": 1230
 }
+
+
+def word_sim(w1: str, w2: str):
+    doc1 = nlp_spacy_full(w1)
+    doc2 = nlp_spacy_full(w2)
+    sim = doc1.similarity(doc2)
+    print("simularity between: {} and {}: {}".format(w1, w2, sim))
+    return sim
+
+
+def find_best_district_match(district: str) -> Optional[str]:
+    max_sim = 0
+    max_sim_district = None
+    for d in district_name_mapping:
+        sim = word_sim(d, district)
+        if sim > max_sim:
+            max_sim = sim
+            max_sim_district = d
+
+    if max_sim > THRESHOLD_SIMILARITY and not max_sim_district is None:
+        return max_sim_district
+
+    return None
